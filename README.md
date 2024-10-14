@@ -4,8 +4,8 @@ This is a Task Management API built using Node.js, Express, and MongoDB. The API
 
 ## Deployed Application
 
-You can access the deployed project here: [User InterFace](https://task-management-system-self.vercel.app/)
-You can access the Backend API here: [Backend API](https://tms-bakcen-api.onrender.com/)
+-You can access the deployed project here: [User InterFace](https://task-management-system-self.vercel.app/)
+-You can access the Backend API here: [Backend API](https://tms-bakcen-api.onrender.com/)
 
 ## Features
 
