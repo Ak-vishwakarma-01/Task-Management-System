@@ -2,6 +2,11 @@
 
 This is a Task Management API built using Node.js, Express, and MongoDB. The API allows users to manage tasks, including creating, updating, deleting, and retrieving tasks. It also includes user authentication with JWT and provides routes for handling task-related operations.
 
+## Deployed Application
+
+You can access the deployed project here: [User InterFace](https://task-management-system-self.vercel.app/)
+You can access the Backend API here: [Backend API](https://tms-bakcen-api.onrender.com/)
+
 ## Features
 
 - User authentication using JWT.
@@ -9,7 +14,7 @@ This is a Task Management API built using Node.js, Express, and MongoDB. The API
 - Mark tasks as important or complete.
 - Filter tasks by importance or completion.
 - MongoDB as the database.
-- Deployed and accessible via the provided link.
+- Deployed at the vercel for frontend and bakcend on render
 
 - ## API Endpoints
 
@@ -41,17 +46,12 @@ This is a Task Management API built using Node.js, Express, and MongoDB. The API
 - **Incomplete Tasks**: `GET /api/v2/get-incomplete-tasks`
   - Headers: `id, authorization`
 
-
-## Deployed Application
-
-You can access the API here: [Task Management API](https://task-management-system-self.vercel.app/)
-
 ## Tech Stack
 
 - **Backend**: Node.js, Express
+- **Frontend**: react.js 
 - **Database**: MongoDB (with Mongoose ORM)
 - **Authentication**: JWT (JSON Web Token)
-- **Environment Variables**: dotenv
 
 ## Prerequisites
 
