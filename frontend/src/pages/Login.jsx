@@ -22,7 +22,7 @@ const Login = () => {
       if(Data.username === "" || Data.email=== "" || Data.password === ""){
         alert("All fields are required")
       }else{
-        const response = await axios.post("http://localhost:1000/api/v1/log-in",Data);
+        const response = await axios.post("https://tms-bakcen-api.onrender.com/api/v1/log-in",Data);
         setData({username:"",password:""})
         localStorage.setItem("id",response.data.id);
         localStorage.setItem("token",response.data.token)

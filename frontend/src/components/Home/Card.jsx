@@ -13,7 +13,7 @@ const Card = ({ home, setinputdiv, data, setUpdatedData }) => {
   const handleCompleteTask = async (id) => {
     try {
       await axios.put(
-        `http://localhost:1000/api/v2/update-complete-task/${id}`,
+        `https://tms-bakcen-api.onrender.com/api/v2/update-complete-task/${id}`,
         {},
         { headers }
       );
@@ -30,7 +30,7 @@ const Card = ({ home, setinputdiv, data, setUpdatedData }) => {
   const deleteTask = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:1000/api/v2/delete-task/${id}`,
+        `https://tms-bakcen-api.onrender.com/api/v2/delete-task/${id}`,
         { headers }
       );
       console.log(response.data.message);

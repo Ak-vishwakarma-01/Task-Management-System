@@ -26,7 +26,7 @@ const InputData = ({ Inputdiv, setinputdiv , updatedData , setupdatedData}) => {
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:1000/api/v2/create-task",
+          "https://tms-bakcen-api.onrender.com/api/v2/create-task",
           Data,
           { headers }
         );
@@ -44,7 +44,7 @@ const InputData = ({ Inputdiv, setinputdiv , updatedData , setupdatedData}) => {
     } else {
       try {
         const response = await axios.put(
-          `http://localhost:1000/api/v2/update-task/${updatedData.id}`,
+          `https://tms-bakcen-api.onrender.com/api/v2/update-task/${updatedData.id}`,
           Data,
           { headers }
         );

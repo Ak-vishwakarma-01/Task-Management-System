@@ -12,7 +12,7 @@ const Completed = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        "http://localhost:1000/api/v2/get-complete-tasks",
+        "https://tms-bakcen-api.onrender.com/api/v2/get-complete-tasks",
         {
           headers,
         }
