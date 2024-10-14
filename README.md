@@ -11,9 +11,40 @@ This is a Task Management API built using Node.js, Express, and MongoDB. The API
 - MongoDB as the database.
 - Deployed and accessible via the provided link.
 
+- ## API Endpoints
+
+### Auth
+- **Sign In**: `POST /api/v1/sign-in`
+  - Body: `{ username, email, password }`
+- **Log In**: `POST /api/v1/log-in`
+  - Body: `{ username, password }`
+
+### Tasks
+- **Create**: `POST /api/v2/create-task`
+  - Headers: `id, authorization`
+  - Body: `{ title, desc }`
+- **Get All**: `GET /api/v2/get-all-tasks`
+  - Headers: `id, authorization`
+- **Delete**: `DELETE /api/v2/delete-task/:id`
+  - Headers: `id, authorization`
+- **Update**: `PUT /api/v2/update-task/:id`
+  - Headers: `id, authorization`
+  - Body: `{ title, desc }`
+
+### Status
+- **Mark Complete**: `PUT /api/v2/update-complete-task/:id`
+  - Headers: `id, authorization`
+
+### Filters
+- **Complete Tasks**: `GET /api/v2/get-complete-tasks`
+  - Headers: `id, authorization`
+- **Incomplete Tasks**: `GET /api/v2/get-incomplete-tasks`
+  - Headers: `id, authorization`
+
+
 ## Deployed Application
 
-You can access the API here: [Task Management API](<Deployed_Link>)
+You can access the API here: [Task Management API](https://task-management-system-self.vercel.app/)
 
 ## Tech Stack
 
@@ -34,5 +65,4 @@ Before running the application, ensure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-repo-link.git
-   cd task-management-api
+   git clone https://github.com/your-repo-link.git](https://github.com/Ak-vishwakarma-01/Task-Management-System
