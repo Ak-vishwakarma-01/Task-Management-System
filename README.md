@@ -13,8 +13,7 @@ You can access the Backend API here:
 
 - User authentication using JWT.
 - Task management (create, update, delete, get).
-- Mark tasks as important or complete.
-- Filter tasks by importance or completion.
+- Filter tasks by complete or incomplete.
 - MongoDB as the database.
 - Deployed at the vercel for frontend and bakcend on render
 
