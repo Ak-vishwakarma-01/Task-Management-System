@@ -9,6 +9,9 @@ You can access the deployed project here:
 You can access the Backend API here:  
 [Backend API](https://tms-bakcen-api.onrender.com/)
 
+# Important thing to notie when you are running localy
+### change the prefix of api key from every jsx and js file of frontend , change from `https://tms-bakcen-api.onrender.com/` to your local host for example this is my localhost `http://localhost:1000/`
+
 ## Features
 
 - User authentication using JWT.
@@ -67,3 +70,8 @@ Before running the application, ensure you have the following installed:
 
    ```bash
    git clone https://github.com/your-repo-link.git](https://github.com/Ak-vishwakarma-01/Task-Management-System
+
+
+## How to run the project
+  1. Run the command `npm i` inside both folder forntend and backend
+  2. then  Use `npm app.js` for backend and `npm run dev` for frontend

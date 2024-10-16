@@ -6,7 +6,7 @@ const port = 1000;
 import dotenv from "dotenv"; 
 dotenv.config(); 
 
-import conn from "./connection/conn.js";
+
 import userApi from "./routes/user.js"
 import taskApi from "./routes/task.js"
 
