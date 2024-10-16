@@ -20,7 +20,7 @@ You can access the Backend API here:
 - MongoDB as the database.
 - Deployed at the vercel for frontend and bakcend on render
 
-- ## API Endpoints
+## API Endpoints
 
 ### Auth
 - **Sign In**: `POST /api/v1/sign-in`
