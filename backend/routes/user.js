@@ -14,6 +14,7 @@ router.post("/sign-in",async(req,res)=>{
     }else if(username.length < 4){
         return res.status(400).json({message:"Username should have atleast 4 character"});
     }
+        
     if(existingEmail){
         return res.status(300).json({message:"Email already exists"});
     }
