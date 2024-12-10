@@ -1,6 +1,6 @@
 # Task Management API
 
-This is a Task Management application built using reactjs , Node.js, Express, and MongoDB. The API allows users to manage tasks, including creating, updating, deleting, and retrieving tasks. It also includes user authentication with JWT and provides routes for handling task-related operations.
+the project Task Management application built using reactjs , Node.js, Express, and MongoDB. The API allows users to manage tasks, including creating, updating, deleting, and retrieving tasks. It also includes user authentication with JWT and provides routes for handling task-related operations.
 
 ## Deployed Application
 You can access the deployed project here:  
