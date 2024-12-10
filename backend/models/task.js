@@ -22,4 +22,4 @@ const TaskSchema = new mongoose.Schema({
 );
 
 
-export default mongoose.model("task", TaskSchema); // Use PascalCase for the model name
+export default mongoose.model("task", TaskSchema); 

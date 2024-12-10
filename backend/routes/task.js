@@ -58,18 +58,18 @@ router.put("/update-task/:id",authenticateToken,async(req,res)=>{
     }
 });
 
-router.put("/update-imp-task/:id",authenticateToken,async(req,res)=>{
-    try{
-        const {id} = req.params;
-        const TaskData = await Task.findById(id);
-        const impTask = TaskData.important;
-        await Task.findByIdAndUpdate(id,{important:!impTask})
-        res.status(200).json({message:"Task Updated successfully"});
-    }catch(error){
-        console.log(error);
-        return res.status(400).json({message:"Internal Server Error"});
-    }
-});
+// router.put("/update-imp-task/:id",authenticateToken,async(req,res)=>{
+//     try{
+//         const {id} = req.params;
+//         const TaskData = await Task.findById(id);
+//         const impTask = TaskData.important;
+//         await Task.findByIdAndUpdate(id,{important:!impTask})
+//         res.status(200).json({message:"Task Updated successfully"});
+//     }catch(error){
+//         console.log(error);
+//         return res.status(400).json({message:"Internal Server Error"});
+//     }
+// });
 
 router.put("/update-complete-task/:id",authenticateToken,async(req,res)=>{
     try{
@@ -84,21 +84,21 @@ router.put("/update-complete-task/:id",authenticateToken,async(req,res)=>{
     }
 });
 
-router.get("/get-imp-tasks",authenticateToken,async(req,res)=>{
-    try{
-        const {id} = req.headers;
-        const Data = await User.findById(id).populate({
-            path: "tasks",
-            match:{important:true},
-            options:{sort:{createdAt:-1}}
-        }); 
-        const impTaskData = Data.tasks;
-        res.status(200).json({data:impTaskData});
-    }catch(error){
-        console.log(error);
-        return res.status(400).json({message:"Internal Server Error"});
-    }
-});
+// router.get("/get-imp-tasks",authenticateToken,async(req,res)=>{
+//     try{
+//         const {id} = req.headers;
+//         const Data = await User.findById(id).populate({
+//             path: "tasks",
+//             match:{important:true},
+//             options:{sort:{createdAt:-1}}
+//         }); 
+//         const impTaskData = Data.tasks;
+//         res.status(200).json({data:impTaskData});
+//     }catch(error){
+//         console.log(error);
+//         return res.status(400).json({message:"Internal Server Error"});
+//     }
+// });
 
 router.get("/get-complete-tasks",authenticateToken,async(req,res)=>{
     try{
