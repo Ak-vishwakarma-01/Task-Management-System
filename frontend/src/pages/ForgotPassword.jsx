@@ -15,15 +15,30 @@ const ForgotPassword = () => {
     setData({...Data,[name]:value});
     setOtp({...otp,[name]:value})
   }
+
+
+
   
   const sendOtpFunc = async() =>{
-      const response = await axios.post('https://tms-bakcen-api.onrender.com/api/v1/check-email',Data.email);
-      if(response.status==200){
-          alert("email not found");
-      }else{
-
-      } 
-    }
+    try {
+        const response = await axios.post(
+            'https://tms-bakcen-api.onrender.com/api/v1/check-email',
+            { email: Data.email }
+        );
+        if (response.status === 200) {
+            
+            alert("Otp sent");
+            setOtpPass({...otpPass,verifyOtp:true, sendOtp:false})
+             
+        } else {
+            console.log(response.data.message); 
+            alert(response.data.message);
+        }
+    } catch (error) {
+        console.error("Error sending OTP:", error.response?.data?.message || error.message);
+        alert("Error sending OTP:", error.response?.data?.message || error.message);
+    } 
+  }
 
   const verifyOtpFunc = async() =>{
 
@@ -47,14 +62,13 @@ const ForgotPassword = () => {
   }
 
   const submit = async()=>{
-    if(sendOtp){
-        sendOtpFunc;
-    }
-    else if(verifyOtp){
-        verifyOtpFunc;
-    }else {
-        updatePassFunc;
-    }   
+    if (otpPass.sendOtp===true) {
+        sendOtpFunc();
+    } else if (otpPass.verifyOtp) {
+        verifyOtpFunc();
+    } else {
+        updatePassFunc();
+    }  
   }
 
   return (

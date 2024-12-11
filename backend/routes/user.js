@@ -2,6 +2,9 @@ import express from "express"
 import User from "../models/user.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import nodemailer from 'nodemailer';
+import cors from 'cors'
+
 const router = express.Router(); 
 
 router.post("/sign-in",async(req,res)=>{
@@ -90,6 +93,35 @@ router.post("/check-email", async(req,res)=>{
         console.log(error);
         return res.status(400).json({message:"Internal Server Error"});
     }
+
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'omf000111@gmail.com',
+            pass: 'wlds gkbo lpdr otnm', // Consider using environment variables for security
+        },
+    });
+    
+    router.post('/send-otp', async (req, res) => {
+        const { email } = req.body;
+        const otp = Math.floor(100000 + Math.random() * 900000); // Generate a random OTP
+    
+        const mailOptions = {
+            from: 'omf000111@gmail.com',
+            to: email,
+            subject: 'Your OTP Code',
+            text: `Your OTP code is ${otp}`,
+        };
+    
+        try {
+            await transporter.sendMail(mailOptions);
+            res.status(200).send({ message: 'OTP sent successfully', otp });
+        } catch (error) {
+            console.error('Error sending email:', error);
+            res.status(500).send({ message: 'Failed to send OTP' });
+        }
+    });
     
 })
 
