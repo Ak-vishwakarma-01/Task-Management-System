@@ -85,9 +85,9 @@ router.post("/update-password", async(req,res)=>{
     service: 'gmail',
     auth: {
         user: 'omf000111@gmail.com',
-        pass: 'wlds gkbo lpdr otnm', // Consider using environment variables for security
+        pass: 'wlds gkbo lpdr otnm', 
     },
-});
+ });
 
 router.post('/send-otp', async (req, res) => {
     const { email } = req.body;
