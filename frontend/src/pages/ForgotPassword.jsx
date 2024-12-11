@@ -9,17 +9,23 @@ const ForgotPassword = () => {
     const [otp, setOtp] = useState({otp:''})
     const dispatch = useDispatch();
     const [otpPass, setOtpPass] = useState({sendOtp:true, verifyOtp: false, updatePassword: false});
-    const [backendotp, setBackendotp] = useState({});
-  const change = (e)=>{
-    const {name,value} = e.target;
-    setData({...Data,[name]:value});
-    setOtp({...otp,[name]:value})
-  }
+    const [generatedOtp, setGeneratedOtp] = useState(''); // To store OTP from backend
+    
+    const change = (e) => {
+        const { name, value } = e.target;
+    
+        if (name === 'otp') {
+            setOtp({ ...otp, otp: value });
+        } else {
+            setData({ ...Data, [name]: value });
+        }
+    };
+    
 
 
 
   
-  const sendOtpFunc = async() =>{
+  const sendOtpFunc = async () => {
     try {
         const response = await axios.post(
             'https://tms-bakcen-api.onrender.com/api/v1/check-email',
@@ -29,27 +35,35 @@ const ForgotPassword = () => {
             const response1 = await axios.post(
                 'https://tms-bakcen-api.onrender.com/api/v1/send-otp',
                 { email: Data.email });
-            alert("Otp sent");
-            setOtpPass({...otpPass,verifyOtp:true, sendOtp:false})
-            setBackendotp(response1.data.otp);
+                
+                if (response1.status === 200) {
+                alert('OTP sent successfully' , );
+                console.log('Generated OTP:', response1.data);    // Debugging
+                setGeneratedOtp(response1.data.otp);              // Save OTP from backend
+                setOtpPass({ ...otpPass, verifyOtp: true, sendOtp: false });
+            }
         } else {
-            console.log(response.data.message); 
             alert(response.data.message);
         }
     } catch (error) {
-        console.error("Error sending OTP:", error.response?.data?.message || error.message);
-        alert("Error sending OTP:", error.response?.data?.message || error.message);
-    } 
-  }
-
-  const verifyOtpFunc = async() =>{
-    if(setBackendotp !== otp.otp){
-        alert("Invalid OTP");
-        setOtp({...otp,otp:''});
-    }else{
-        setOtpPass({...otpPass,verifyOtp:false, updatePassword:true})
+        console.error('Error sending OTP:', error.response?.data?.message || error.message);
+        alert(error.response?.data?.message || error.message);
     }
-  }
+};
+
+
+const verifyOtpFunc = async () => {
+    console.log('Generated OTP:', generatedOtp); // Debugging
+    console.log('Entered OTP:', otp.otp); // Debugging
+
+    if (otp.otp === generatedOtp.toString()) {
+        alert('OTP verified successfully');
+        setOtpPass({ ...otpPass, verifyOtp: false, updatePassword: true });
+    } else {
+        alert('Invalid OTP');
+    }
+};
+
 
   const updatePassFunc = async() =>{
     try{
