@@ -9,7 +9,7 @@ const ForgotPassword = () => {
     const [otp, setOtp] = useState({otp:''})
     const dispatch = useDispatch();
     const [otpPass, setOtpPass] = useState({sendOtp:true, verifyOtp: false, updatePassword: false});
-
+    const [backendotp, setBackendotp] = useState({});
   const change = (e)=>{
     const {name,value} = e.target;
     setData({...Data,[name]:value});
@@ -26,10 +26,12 @@ const ForgotPassword = () => {
             { email: Data.email }
         );
         if (response.status === 200) {
-            
+            const response1 = await axios.post(
+                'https://tms-bakcen-api.onrender.com/api/v1/send-otp',
+                { email: Data.email });
             alert("Otp sent");
             setOtpPass({...otpPass,verifyOtp:true, sendOtp:false})
-             
+            setBackendotp(response1.data.otp);
         } else {
             console.log(response.data.message); 
             alert(response.data.message);
@@ -41,7 +43,12 @@ const ForgotPassword = () => {
   }
 
   const verifyOtpFunc = async() =>{
-
+    if(setBackendotp !== otp.otp){
+        alert("Invalid OTP");
+        setOtp({...otp,otp:''});
+    }else{
+        setOtpPass({...otpPass,verifyOtp:false, updatePassword:true})
+    }
   }
 
   const updatePassFunc = async() =>{
