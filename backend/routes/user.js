@@ -37,7 +37,7 @@ router.post("/sign-in",async(req,res)=>{
         console.log(error);
         return res.status(400).json({message:"Internal Server Error"});
     }
-})
+});
 
 router.post("/log-in", async(req,res)=>{
     try{
@@ -60,7 +60,7 @@ router.post("/log-in", async(req,res)=>{
         return res.status(400).json({message:"Internal Server Error"});
     }
     
-})
+});
 
 router.post("/update-password", async(req,res)=>{
     try{
@@ -79,50 +79,34 @@ router.post("/update-password", async(req,res)=>{
         return res.status(400).json({message:"Internal Server Error"});
     }
     
-})
+   });
 
-router.post("/check-email", async(req,res)=>{
-    try{
-        const {email} = req.body;
-        const existingUser = await User.findOne({email: email});
-        if(!existingUser){
-            return res.status(300).json({message:"User Name Not Found"});
-        }
-        return res.status(200).json({message:"User Found Successfully"});
-    }catch(error){
-        console.log(error);
-        return res.status(400).json({message:"Internal Server Error"});
+   const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'omf000111@gmail.com',
+        pass: 'wlds gkbo lpdr otnm', // Consider using environment variables for security
+    },
+});
+
+router.post('/send-otp', async (req, res) => {
+    const { email } = req.body;
+    const otp = Math.floor(100000 + Math.random() * 900000); // Generate a random OTP
+
+    const mailOptions = {
+        from: 'omf000111@gmail.com',
+        to: email,
+        subject: 'Your OTP Code',
+        text: `Your OTP code is ${otp}`,
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        res.status(200).send({ message: 'OTP sent successfully', otp });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).send({ message: 'Failed to send OTP' });
     }
-
-
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'omf000111@gmail.com',
-            pass: 'wlds gkbo lpdr otnm', // Consider using environment variables for security
-        },
-    });
-    
-    router.post('/send-otp', async (req, res) => {
-        const { email } = req.body;
-        const otp = Math.floor(100000 + Math.random() * 900000); // Generate a random OTP
-    
-        const mailOptions = {
-            from: 'omf000111@gmail.com',
-            to: email,
-            subject: 'Your OTP Code',
-            text: `Your OTP code is ${otp}`,
-        };
-    
-        try {
-            await transporter.sendMail(mailOptions);
-            res.status(200).send({ message: 'OTP sent successfully', otp });
-        } catch (error) {
-            console.error('Error sending email:', error);
-            res.status(500).send({ message: 'Failed to send OTP' });
-        }
-    });
-    
-})
+});
 
 export default router;
