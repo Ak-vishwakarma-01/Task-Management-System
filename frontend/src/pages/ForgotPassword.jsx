@@ -124,7 +124,7 @@ const verifyOtpFunc = async () => {
             : 'updae password'  
             }
             </button>
-            {/* <Link to="/login"><button className='text-xs text-blue-400 hover:text-blue-200 m-2' >Log In Page</button></Link> */}
+            <Link to="/signup" className="text-xs text-blue-400 hover:text-blue-200 m-2">Not having account? sighnup here</Link>
         </div>
       </div>
     </div>
