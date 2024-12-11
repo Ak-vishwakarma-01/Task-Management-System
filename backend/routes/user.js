@@ -66,7 +66,10 @@ router.post("/update-password", async(req,res)=>{
         if(!existingUser){
             return res.status(300).json({message:"User Name Not Found"});
         }
-        await User.findOneAndUpdate({email: email},{$set:{ password: password}});
+
+        const hashPass = await bcrypt.hash(password,10);
+
+        await User.findOneAndUpdate({email: email},{$set:{ password: hashPass}});
         return res.status(200).json({message:"Updated Successfully"});
     }catch(error){
         console.log(error);
