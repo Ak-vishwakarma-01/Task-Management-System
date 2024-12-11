@@ -78,4 +78,19 @@ router.post("/update-password", async(req,res)=>{
     
 })
 
+router.post("/check-email", async(req,res)=>{
+    try{
+        const {email} = req.body;
+        const existingUser = await User.findOne({email: email});
+        if(!existingUser){
+            return res.status(300).json({message:"User Name Not Found"});
+        }
+        return res.status(200).json({message:"User Found Successfully"});
+    }catch(error){
+        console.log(error);
+        return res.status(400).json({message:"Internal Server Error"});
+    }
+    
+})
+
 export default router;
