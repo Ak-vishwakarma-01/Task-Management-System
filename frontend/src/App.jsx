@@ -8,6 +8,7 @@ import SighnUp from './pages/SighnUp';
 import Login from './pages/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from './store/auth';
+import ForgotPassword from './pages/ForgotPassword';
 
 const App = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const App = () => {
         </Route>
           <Route path="/signup" element={<SighnUp />}/>
           <Route path="/login" element={<Login />}/>
+          <Route path="/forgot" element={<ForgotPassword/>}/>
       </Routes>
     </div>
   )
