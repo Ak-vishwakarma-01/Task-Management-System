@@ -39,47 +39,54 @@ router.post("/sign-in",async(req,res)=>{
     }
 });
 
-router.post("/log-in", async(req,res)=>{
-    try{
-        const {username, email, password} = req.body;
-        const existingUser = await User.findOne({username: username});
-        if(!existingUser){
-            return res.status(300).json({message:"Invalid Credentials"});
+router.post("/log-in", async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const existingUser = await User.findOne({ username });
+
+        if (!existingUser) {
+            return res.status(400).json({ message: "Invalid Credentials" });
         }
-        bcrypt.compare(password,existingUser.password,(err,data)=>{
-            if(data){
-                const authClaims = [{name:username},{jti:jwt.sign({},"akvTM")}];
-                const token = jwt.sign({authClaims},"akvTM",{expiresIn:"20s"});
-                res.status(200).json({id:existingUser._id, token: token});
-            }else{
-                return res.status(400).json({message:"Invalid Credentials"})
-            }
-        })
-    }catch(error){
-        console.log(error);
-        return res.status(400).json({message:"Internal Server Error"});
+
+        // Compare the raw password with the hashed password
+        const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+
+        if (isPasswordValid) {
+            const token = jwt.sign({ id: existingUser._id, username: existingUser.username }, "akvTM", {
+                expiresIn: "20s",
+            });
+            return res.status(200).json({ id: existingUser._id, token });
+        } else {
+            return res.status(400).json({ message: "Invalid Credentials" });
+        }
+    } catch (error) {
+        console.error("Error during login:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
     }
-    
 });
 
-router.post("/update-password", async(req,res)=>{
-    try{
-        const {email, password} = req.body;
-        const existingUser = await User.findOne({email: email});
-        if(!existingUser){
-            return res.status(300).json({message:"User Name Not Found"});
+
+router.post("/update-password", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const existingUser = await User.findOne({ email });
+
+        if (!existingUser) {
+            return res.status(400).json({ message: "User Not Found" });
         }
 
-        const hashPass = await bcrypt.hash(password,10);
+        const hashPass = await bcrypt.hash(password, 10);
 
-        await User.findOneAndUpdate({email: email},{$set:{ password: hashPass}});
-        return res.status(200).json({message:"Updated Successfully"});
-    }catch(error){
-        console.log(error);
-        return res.status(400).json({message:"Internal Server Error"});
+        existingUser.password = hashPass; // Update the password in the user object
+        await existingUser.save(); // Save the updated user
+
+        return res.status(200).json({ message: "Password Updated Successfully" });
+    } catch (error) {
+        console.error("Error updating password:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
     }
-    
-   });
+});
+
 
 
    router.post("/check-email", async(req,res)=>{
