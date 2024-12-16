@@ -41,23 +41,33 @@ router.post("/sign-in",async(req,res)=>{
 
 router.post("/log-in", async (req, res) => {
     try {
-        const { email, username, password } = req.body;
-        const existingUser1 = await User.findOne({ username });
-        const existingUser2 = await User.findOne({ email });
+        const { identifier, password } = req.body;
 
+        // Validate input
+        if (!identifier || !password) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        // Check for user by username or email
+        const existingUser1 = await User.findOne({ username: identifier });
+        const existingUser2 = await User.findOne({ email: identifier });
+
+        // If user not found
         if (!existingUser1 && !existingUser2) {
             return res.status(400).json({ message: "Invalid Credentials" });
         }
-        
-        const user = existingUser1===false? existingUser2: existingUser1l
+
+        const user = existingUser1 || existingUser2;
 
         // Compare the raw password with the hashed password
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (isPasswordValid) {
-            const token = jwt.sign({ id: user._id, username: user.username }, "akvTM", {
-                expiresIn: "20s",
-            });
+            const token = jwt.sign(
+                { id: user._id, username: user.username },
+                "akvTM",
+                { expiresIn: "20s" } 
+            );
             return res.status(200).json({ id: user._id, token });
         } else {
             return res.status(400).json({ message: "Invalid Credentials" });
@@ -67,6 +77,7 @@ router.post("/log-in", async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 });
+
 
 
 router.post("/update-password", async (req, res) => {
