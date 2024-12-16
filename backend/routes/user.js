@@ -41,21 +41,24 @@ router.post("/sign-in",async(req,res)=>{
 
 router.post("/log-in", async (req, res) => {
     try {
-        const { username, password } = req.body;
-        const existingUser = await User.findOne({ username });
+        const { email, username, password } = req.body;
+        const existingUser1 = await User.findOne({ username });
+        const existingUser2 = await User.findOne({ email });
 
-        if (!existingUser) {
+        if (!existingUser1 && !existingUser2) {
             return res.status(400).json({ message: "Invalid Credentials" });
         }
+        
+        const user = existingUser1===false? existingUser2: existingUser1l
 
         // Compare the raw password with the hashed password
-        const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+        const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (isPasswordValid) {
-            const token = jwt.sign({ id: existingUser._id, username: existingUser.username }, "akvTM", {
+            const token = jwt.sign({ id: user._id, username: user.username }, "akvTM", {
                 expiresIn: "20s",
             });
-            return res.status(200).json({ id: existingUser._id, token });
+            return res.status(200).json({ id: user._id, token });
         } else {
             return res.status(400).json({ message: "Invalid Credentials" });
         }

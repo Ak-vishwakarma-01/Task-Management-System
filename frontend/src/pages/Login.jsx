@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import {useState} from 'react'
 import { Link ,useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { authActions } from '../store/auth';
@@ -19,7 +19,7 @@ const Login = () => {
 
   const submit = async()=>{
     try{
-      if( Data.email=== "" || Data.password === ""){
+      if(Data.username === "" || Data.email=== "" || Data.password === ""){
         alert("All fields are required")
       }else{
         const response = await axios.post("https://tms-bakcen-api.onrender.com/api/v1/log-in",Data);
@@ -38,17 +38,17 @@ const Login = () => {
       <div className="sm:w-2/6 md:w-2/6 lg:w-2/6 w-4/6 p-4 bg-blue-900 rounded flex flex-col items-center">
         <div className="text-2xl">LogIn</div>
         <input
-        type="email" 
-        placeholder="email" 
-        name="email"
-        value = {Data.email}
+        type="username" 
+        placeholder="username" 
+        name="username"
+        value = {Data.username}
         onChange={change}
         className="bg-blue-700 px-3 py-2 rounded my-3 w-full" />
         <input
         type="password" 
         placeholder="password" 
         name="password"
-        value = {Data.password}
+        value = {Data.email}
         onChange={change}
         className="bg-blue-700 px-3 py-2 rounded my-3 w-full" />
         <div className='w-full flex-row items-center'>
