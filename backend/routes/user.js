@@ -49,7 +49,7 @@ router.post("/log-in", async(req,res)=>{
         bcrypt.compare(password,existingUser.password,(err,data)=>{
             if(data){
                 const authClaims = [{name:username},{jti:jwt.sign({},"akvTM")}];
-                const token = jwt.sign({authClaims},"akvTM",{expiresIn:"2d"});
+                const token = jwt.sign({authClaims},"akvTM",{expiresIn:"20s"});
                 res.status(200).json({id:existingUser._id, token: token});
             }else{
                 return res.status(400).json({message:"Invalid Credentials"})
